@@ -3,6 +3,12 @@ cuatros
 
 Desafio programando.com
 
+Se presentan 2 soluciones. Una de fuerza de bruta
+y otra que construye la solucion tomando soluciones mas pequeñas.
+(Como formar nros usando 3 nros 4, 2 nros 4, 1 nro 4, etc. )
+
+Copio aqui abajo la explicacion para el algoritmo de fuerza bruta.
+
 # Solucion de fuerza bruta, considerando tambien que
 # para generar las distintas expresiones no es necesario muchos
 # niveles de recursion y que ellas seran faciles de regenerar
