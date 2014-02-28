@@ -13,6 +13,7 @@ La segunda solucion presenta 3 variantes,
 - cuatros2c.pt: no hace esfuerzo alguno por reducir los parentesis superfluos
 
 
-- rodrigo.chappa@gmail.com
-- http://goo.gl/SAaM48
+rodrigo.chappa@gmail.com 
+
+http://goo.gl/SAaM48
 
