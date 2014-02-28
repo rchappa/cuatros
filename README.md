@@ -2,6 +2,7 @@ cuatros
 =======
 
 Desafio programando.com presente en este link: 
+http://programando.org/blog/2014/01/desafio-enero-2014-los-cuatro-cuatro/
 
 Se presentan 2 soluciones. Una de fuerza de bruta (cuatros.py)
 y otra que construye la solucion tomando soluciones mas pequeñas (cuatros2.py).
