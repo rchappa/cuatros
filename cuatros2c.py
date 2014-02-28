@@ -2,6 +2,7 @@
 # Produce expresiones mas largas (comparada con las otras versiones)
 # No considera el largo de las expresiones para insertar las siguientes
 # Inserta siempre, incondicionalmente.
+# Se generan incluso algunos parentesis superfluos
 #
 # Construye soluciones usando 1 nro 4, luego 2 nros 4, luego 3 y finalmente 4,
 # al estilo usado por Dynamic Programming
@@ -19,8 +20,7 @@ from math import sqrt
 
 # Construccion bottom up de nums, partiendo por el diccionario de tamano 1
 # (ver populate_level() mas abajo tb)
-nums  = { 1: { 2: "r(4)", 4: "4", 24: "4!", 4.0/9.0: ".4'", .4: ".4", sqrt(4.0/9.0):"r(.4')" },
-          2: { 44: "44" }, 3: {}, 4: {} }
+nums  = { 1: { 2: "r(4)", 4: "4", 24: "4!", 4.0/9.0: ".4'", .4: ".4", sqrt(4.0/9.0):"r(.4')" } }
 
 # paren(x): escribe parentesis alrededor de la expresion x, intenta no hacerlo cuando es superfluo
 #
@@ -59,9 +59,7 @@ def populate(funcs):
     n4 = nums[4]
     for n in range(0,101):
         if n in n4:
-           # Un "backpatch": para no castigar a todos en paren() comparando contra 44, se permite
-           # generar parentesis superfluos alrededor del 44 y aqui se corrige, solo cuando es parte del listado final
-           print n, "=", n4[n].replace("(44)","44")
+           print n, "=", n4[n]
 ## Descomentar para comprobar que las expresiones efectivamente generan el nro adecuado
            print "TST", n, n == int(evalme(n4[n])+0.000001)
            if n != int(evalme(n4[n])+0.000001):
