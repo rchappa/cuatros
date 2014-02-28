@@ -26,36 +26,29 @@ nums  = { 1: { 2: "r(4)", 4: "4", 24: "4!", 4.0/9.0: ".4'", .4: ".4", sqrt(4.0/9
 def paren(x,level):
     return "(" + x + ")" if level > 1 else x
 
-# acerca al entero mas cercano, cuando esta cerca de este
-ferror = 0.00001
-def roundme(x):
-    if abs(x- int(x+ferror)) < ferror: return int(x+ferror)
-    return x
-
 # construye tabla de memoization usando los operadores que se pasan
 # en parametro funcs, la tabla se usa en invocaciones posteriores
 def populate_level(funcs,level):
 
-   ll = {}  # el largo de cada expresion en este nivel, la idea es usar esto para generar expresiones cortas
    nl = nums[level]
    for i in range(1,level):
        # generar todas las combinaciones posibles
        # usar esas combinaciones para operarlas con todos los operadores
        ni  = nums[i]
        nli = nums[level-i]
-       newelements = [ (roundme(funcs[op](x,y)), paren(ni[x],i) + op + paren(nli[y],level-i)) for op in funcs for x in ni for y in nli ]
+       newelements = [ (funcs[op](x,y), paren(ni[x],i) + op + paren(nli[y],level-i)) for op in funcs for x in ni for y in nli ]
        # se tienen varios resultados, tomemos lo mejor
        for k,v in newelements:
            # se usa una expresion mas corta cada vez que se puede
-           lv = len(v)
-           if k not in nl or lv < ll[k]:
+           if k not in nl or len(v) < len(nl[k]):
               nl[k] = v
-              ll[k] = lv
 
 ## Para comprobar que los datos generados son correctos
-##def evalme(expr):
-##   expr = expr.replace("4!","24").replace(".4'","(4.0/9.0)").replace("r(","sqrt(").replace("^","**")
-##   return eval(expr)
+def evalme(expr):
+   expr = expr.replace("4!","24").replace(".4'","(4.0/9.0)").replace("r(","sqrt(").replace("^","**")
+   expr = expr.replace("4.0","X").replace("44","Y").replace(".4","Z")
+   expr = expr.replace("4","4.0").replace("Z",".4").replace("Y","44").replace("X","4.0")
+   return eval(expr)
 
 def populate(funcs):
     for l in range(2,5):
@@ -65,7 +58,7 @@ def populate(funcs):
 # Cuando no se estan generando todas las expresiones, descomentar para saber cuales son estos,
 # los que se guardan en la lista missing
 #
-#    missing = []
+    missing = []
     n4 = nums[4]
     for n in range(0,101):
         if n in n4:
@@ -73,12 +66,15 @@ def populate(funcs):
            # generar parentesis superfluos alrededor del 44 y aqui se corrige, solo cuando es parte del listado final
            print n, "=", n4[n].replace("(44)","44")
 ## Descomentar para comprobar que las expresiones efectivamente generan el nro adecuado
-##           print "TST", n, n == int(evalme(nums[4][n])+0.000001)
-#        else:
-#           missing.append(n)
-#
-#    if len(missing) > 0:
-#       print "Aun falta generar:", missing
+           print "TST", n, n == int(evalme(n4[n])+0.000001)
+           if n != int(evalme(n4[n])+0.000001):
+              print n, int(evalme(n4[n])+0.000001)
+              print n, evalme(n4[n])
+        else:
+           missing.append(n)
+
+    if len(missing) > 0:
+       print "Aun falta generar:", missing
         
 faraway = -9999
 def midiv(x,y): return float(x)/float(y) if y != 0 else faraway
