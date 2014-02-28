@@ -29,35 +29,28 @@ def paren(x,level,force=False):
        if level == 2 and any( op in x for op in ["*","/"] ): return x
     return "(" + x + ")"
 
-# acerca al entero mas cercano, cuando esta cerca de este
-ferror = 0.00001
-def roundme(x):
-    if abs(x- int(x+ferror)) < ferror: return int(x+ferror)
-    return x
-
 # construye tabla de memoization usando los operadores que se pasan
 # en parametro funcs, la tabla se usa en invocaciones posteriores
 def populate_level(funcs,level):
 
-   ll = {}  # el largo de cada expresion en este nivel, la idea es usar esto para generar expresiones cortas
    nl = nums[level]
    for i in range(1,level):
        # generar todas las combinaciones posibles
        # usar esas combinaciones para operarlas con todos los operadores
        ni  = nums[i]
        nli = nums[level-i]
-       newelements = [ (roundme(funcs[op](x,y)), paren(ni[x],i,op=="^") + op + paren(nli[y],level-i)) for op in funcs for x in ni for y in nli ]
+       newelements = [ (funcs[op](x,y), paren(ni[x],i,op=="^") + op + paren(nli[y],level-i)) for op in funcs for x in ni for y in nli ]
        # se tienen varios resultados, tomemos lo mejor
        for k,v in newelements:
            # se usa una expresion mas corta cada vez que se puede
-           lv = len(v)
-           if k not in nl or lv < ll[k]:
+           if k not in nl or len(v) < len(nl[k]):
               nl[k] = v
-              ll[k] = lv
 
 # Para comprobar que los datos generados son correctos
 def evalme(expr):
    expr = expr.replace("4!","24").replace(".4'","(4.0/9.0)").replace("r(","sqrt(").replace("^","**")
+   expr = expr.replace("4.0","X").replace("44","Y").replace(".4","Z")
+   expr = expr.replace("4","4.0").replace("Z",".4").replace("Y","44").replace("X","4.0")
    return eval(expr)
 
 def populate(funcs):
@@ -66,10 +59,11 @@ def populate(funcs):
         # print "nums", l, len(nums[l])
 
     missing = []
+    n4 = nums[4]
     for n in range(0,101):
         if n in nums[4]:
-           print n, "=", nums[4][n]
-           print "TST", n, n == int(evalme(nums[4][n])+0.000001)
+           print n, "=", n4[n]
+           print "TST", n, n == int(evalme(n4[n])+0.000001)
         else:
            missing.append(n)
 
