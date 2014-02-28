@@ -40,37 +40,16 @@ def populate_level(funcs,level):
        nums[level] = dict( [ (funcs[op](x,y), paren(ni[x],i) + op + paren(nli[y],level-i)) for op in funcs for x in ni for y in nli ] )
    nums[2][44] = "44"
 
-## Para comprobar que los datos generados son correctos
-def evalme(expr):
-   expr = expr.replace("4!","24").replace(".4'","(4.0/9.0)").replace("r(","sqrt(").replace("^","**")
-   expr = expr.replace("4.0","X").replace("44","Y").replace(".4","Z")
-   expr = expr.replace("4","4.0").replace("Z",".4").replace("Y","44").replace("X","4.0")
-   return eval(expr)
-
 def populate(funcs):
     for l in range(2,5):
         populate_level(funcs, l)
         # print "nums", l, len(nums[l])
 
-# Cuando no se estan generando todas las expresiones, descomentar para saber cuales son estos,
-# los que se guardan en la lista missing
-#
-    missing = []
     n4 = nums[4]
     for n in range(0,101):
         if n in n4:
            print n, "=", n4[n]
-## Descomentar para comprobar que las expresiones efectivamente generan el nro adecuado
-           print "TST", n, n == int(evalme(n4[n])+0.000001)
-           if n != int(evalme(n4[n])+0.000001):
-              print n, int(evalme(n4[n])+0.000001)
-              print n, evalme(n4[n])
-        else:
-           missing.append(n)
 
-    if len(missing) > 0:
-       print "Aun falta generar:", missing
-        
 faraway = -9999
 def midiv(x,y): return float(x)/float(y) if y != 0 else faraway
       
