@@ -11,7 +11,9 @@ y otra que construye la solucion tomando soluciones mas pequeñas (cuatros2.py).
 La segunda solucion presenta 3 variantes, 
 - cuatros2.py : hace un esfuerzo por reducir los parentesis superfluos.
 - cuatros2b.py: sacrifica el esfuerzo por reducir los parentesis superfluos
-- cuatros2c.pt: no hace esfuerzo alguno por reducir los parentesis superfluos
+                se ven secuencias un poco mas largas, pero el codigo en mas
+                sencillo y veloz
+- cuatros2c.py: no hace esfuerzo alguno por reducir los parentesis superfluos
 
 
 rodrigo.chappa@gmail.com 
